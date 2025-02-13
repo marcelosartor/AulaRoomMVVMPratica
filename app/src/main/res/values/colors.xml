@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Cores principais -->
+    <color name="colorPrimary">#008080</color>  <!-- Teal -->
+    <color name="colorPrimaryVariant">#006666</color>  <!-- Teal mais escuro -->
+    <color name="colorSecondary">#20B2AA</color>  <!-- Light Sea Green (variação do teal) -->
+
+    <!-- Cores para texto -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Cores de fundo -->
+    <color name="backgroundLight">#E0F2F1</color>  <!-- Teal bem claro -->
+    <color name="backgroundDark">#004D40</color>  <!-- Verde escuro para modo noturno -->
+
+    <!-- Cores para estados -->
+    <color name="errorColor">#D32F2F</color>  <!-- Vermelho para erros -->
+    <color name="successColor">#388E3C</color>  <!-- Verde para sucesso -->
 </resources>
