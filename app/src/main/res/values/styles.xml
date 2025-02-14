@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Estilo customizado para SearchView -->
+    <style name="CustomSearchViewStyle">
+        <!-- Cor do texto -->
+        <item name="android:textColor">@android:color/white</item>
+        <!-- Cor do ícone -->
+        <item name="android:iconifiedByDefault">false</item>
+        <item name="android:queryHint">@android:color/white</item> <!-- Dica de pesquisa -->
+        <!-- Cor do texto do hint -->
+        <item name="android:textColorHint">@android:color/white</item>
+        <!-- Cor do cursor -->
+        <item name="android:textCursorDrawable">@drawable/ic_pesquisa_24</item>
+    </style>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- ... outros atributos do tema ... -->
+        <item name="searchViewStyle">@style/MySearchViewStyle</item>
+    </style>
+
+</resources>

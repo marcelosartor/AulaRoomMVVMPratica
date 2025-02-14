@@ -3,7 +3,19 @@
     <style name="Base.Theme.AulaRoomMVVMPratica" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">#008080</item> <!-- Teal -->
+        <item name="colorOnPrimary">#FFFFFF</item> <!-- Branco -->
+        <item name="colorSurface">#F5F5F5</item> <!-- Cinza claro -->
+        <item name="colorOnSurface">#000000</item> <!-- Preto -->
+
+        <item name="searchViewStyle">@style/CustomSearchViewStyle</item>
+        <item name="android:colorControlNormal">@android:color/white</item>
     </style>
 
     <style name="Theme.AulaRoomMVVMPratica" parent="Base.Theme.AulaRoomMVVMPratica" />
+    <style name="MySearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <item name="android:textColor">@color/white</item> <!-- Cor do texto -->
+        <item name="android:textColorHint">@color/black</item> <!-- Cor da dica de texto -->
+        <item name="android:tint">@color/white</item> <!-- Cor dos ícones -->
+    </style>
 </resources>
