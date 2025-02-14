@@ -24,13 +24,25 @@ import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.SearchView.OnQueryTextListener
 import androidx.core.view.MenuHost
 import androidx.lifecycle.Lifecycle
+import br.com.msartor.aularoommvvmpratica.data.database.BancoDeDados
+import br.com.msartor.aularoommvvmpratica.data.entity.Categoria
 import com.google.android.material.appbar.MaterialToolbar
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private val binding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
+
+    @Inject
+    lateinit var bancoDeDados: BancoDeDados
+
     @SuppressLint("SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +59,14 @@ class MainActivity : AppCompatActivity() {
 
         inicializarBarraNavegacao()
         inicializarEventosDeClique()
+
+        // Teste Room
+        val categoriaDao = bancoDeDados.categoriaDao
+        CoroutineScope(Dispatchers.IO).launch {
+            val categoria = Categoria(0,"teste")
+            categoriaDao.salvar( categoria )
+        }
+
 
     }
 
@@ -87,26 +107,6 @@ class MainActivity : AppCompatActivity() {
 
                 })
 
-                /*
-                searchView.post {
-                    val textView = searchView.findViewById<EditText>(androidx.appcompat.R.id.search_src_text)
-                    textView.setTextColor(Color.WHITE)  // Texto branco
-                    textView.setHintTextColor(Color.LTGRAY)  // Placeholder cinza claro
-
-                    val searchCloseButton = searchView.findViewById<ImageView>(androidx.appcompat.R.id.search_close_btn)
-                    val searchMagIcon = searchView.findViewById<ImageView>(androidx.appcompat.R.id.search_mag_icon)
-                    val searchGoButton = searchView.findViewById<ImageView>(androidx.appcompat.R.id.search_go_btn)
-                    val searchBackIcon = searchView.findViewById<ImageView>(androidx.appcompat.R.id.search_button)
-
-                    searchCloseButton?.setColorFilter(Color.WHITE)
-                    searchMagIcon?.setColorFilter(Color.WHITE)
-                    searchGoButton?.setColorFilter(Color.WHITE)
-                    searchBackIcon?.setColorFilter(Color.WHITE)
-
-                    // Remover fundo branco do SearchView
-                    searchView.background = null
-                }
-                 */
 
 
             }
