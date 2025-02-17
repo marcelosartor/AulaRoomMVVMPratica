@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CadastroAnotacaoActivity">
+    tools:context=".presentation.ui.CadastroAnotacaoActivity">
 
 
     <androidx.appcompat.widget.Toolbar
@@ -33,7 +33,7 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editNomeAnotacao"
+            android:id="@+id/editTituloAnotacao"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Digite Anotação" />

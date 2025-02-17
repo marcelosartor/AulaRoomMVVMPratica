@@ -57,6 +57,13 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     ksp(libs.androidx.room.compiler)
 
+    // ViewModel
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    // LiveData
+    implementation(libs.lifecycle.livedata.ktx)
+    //Fragment KTX
+    implementation(libs.androidx.fragment.ktx)
+
     //Hilt
     implementation (libs.hilt.android)
     ksp(libs.dagger.compiler)

@@ -1,32 +1,28 @@
-package br.com.msartor.aularoommvvmpratica
+package br.com.msartor.aularoommvvmpratica.presentation.ui
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import android.view.View
-import android.widget.EditText
-import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuProvider
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.updatePadding
 import br.com.msartor.aularoommvvmpratica.databinding.ActivityMainBinding
 import androidx.appcompat.widget.Toolbar
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.SearchView.OnQueryTextListener
 import androidx.core.view.MenuHost
 import androidx.lifecycle.Lifecycle
+import br.com.msartor.aularoommvvmpratica.R
 import br.com.msartor.aularoommvvmpratica.data.database.BancoDeDados
 import br.com.msartor.aularoommvvmpratica.data.entity.Categoria
-import com.google.android.material.appbar.MaterialToolbar
+import br.com.msartor.aularoommvvmpratica.presentation.viewmodel.CategoriaViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -39,9 +35,6 @@ class MainActivity : AppCompatActivity() {
     private val binding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
-
-    @Inject
-    lateinit var bancoDeDados: BancoDeDados
 
     @SuppressLint("SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,20 +52,11 @@ class MainActivity : AppCompatActivity() {
 
         inicializarBarraNavegacao()
         inicializarEventosDeClique()
-
-        // Teste Room
-        val categoriaDao = bancoDeDados.categoriaDao
-        CoroutineScope(Dispatchers.IO).launch {
-            val categoria = Categoria(0,"teste")
-            categoriaDao.salvar( categoria )
-        }
-
-
     }
 
     private fun inicializarEventosDeClique() {
         binding.fabAdicionar.setOnClickListener {
-            startActivity(Intent(this,CadastroAnotacaoActivity::class.java))
+            startActivity(Intent(this, CadastroAnotacaoActivity::class.java))
         }
     }
 

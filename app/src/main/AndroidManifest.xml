@@ -14,13 +14,15 @@
         android:theme="@style/Theme.AulaRoomMVVMPratica"
         tools:targetApi="31">
         <activity
-            android:name=".CadastroCategoriaActivity"
+            android:name=".presentation.ui.CadastroCategoriaActivity"
+            android:parentActivityName=".presentation.ui.CadastroAnotacaoActivity"
             android:exported="false" />
         <activity
-            android:name=".CadastroAnotacaoActivity"
+            android:name=".presentation.ui.CadastroAnotacaoActivity"
+            android:parentActivityName=".presentation.ui.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".presentation.ui.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:windowSoftInputMode="adjustResize">
