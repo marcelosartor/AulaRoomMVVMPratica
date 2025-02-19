@@ -3,6 +3,7 @@ package br.com.msartor.aularoommvvmpratica.presentation.ui
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -24,6 +25,9 @@ class CadastroAnotacaoActivity : AppCompatActivity() {
     }
 
     private val anotacaoViewModel: AnotacaoViewModel by viewModels()
+    private val categoriaViewModel: CategoriaViewModel by viewModels()
+
+    private lateinit var spinnerAadapter: ArrayAdapter<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,15 +40,40 @@ class CadastroAnotacaoActivity : AppCompatActivity() {
         }
 
         inicializarToolbar()
+        inicializarUI()
         inicializarListeners()
         inicializarObservables()
+    }
 
+    override fun onStart() {
+        super.onStart()
+        categoriaViewModel.listar()
+    }
 
-
-
+    private fun inicializarUI() {
+        with(binding) {
+            spinnerAadapter = ArrayAdapter(
+                this@CadastroAnotacaoActivity,
+                android.R.layout.simple_spinner_dropdown_item,
+                mutableListOf<String>("Selecione uma categoria")
+            )
+            spinnerCategorias.adapter = spinnerAadapter
+        }
     }
 
     private fun inicializarObservables() {
+        categoriaViewModel.categorias.observe(this){
+            val listaCategorias = mutableListOf("Selecione uma categoria")
+            val categorias = it.map { categoria ->
+                categoria.nome
+            }
+            listaCategorias.addAll(categorias)
+            spinnerAadapter.clear()
+            spinnerAadapter.addAll(listaCategorias)
+            spinnerAadapter.notifyDataSetChanged()
+
+        }
+
         anotacaoViewModel.resultadoOperacao.observe(this){
             if(it.sucesso) {
                 Toast.makeText(this, it.mensagem, Toast.LENGTH_SHORT).show()
@@ -70,7 +99,9 @@ class CadastroAnotacaoActivity : AppCompatActivity() {
         with(binding) {
             val titulo = editTituloAnotacao.text.toString()
             val Descricao = editDescricaoAnotacao.text.toString()
-            val idCategoria = 1L;
+
+            val posicaoSelecionada = spinnerCategorias.selectedItemPosition
+            var idCategoria = if(posicaoSelecionada>0) categoriaViewModel.categorias.value?.get(posicaoSelecionada-1)?.id?:0L else 0L
             val anotacao = Anotacao(0, titulo, Descricao, idCategoria)
             anotacaoViewModel.salvar(anotacao)
         }

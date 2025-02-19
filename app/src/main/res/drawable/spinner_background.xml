@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/spinner_background_color" /> <!-- Sua cor de fundo desejada -->
+            <corners android:radius="4dp" /> <!-- Opcional: Cantos arredondados -->
+            <padding android:right="30dp" /> <!-- Adicione padding à direita para dar espaço para a seta -->
+        </shape>
+    </item>
+    <item android:drawable="@drawable/ic_arrow_drop_down"
+        android:gravity="center_vertical|end"
+        android:right="10dp">
+    </item>
+</layer-list>

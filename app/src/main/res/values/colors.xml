@@ -16,4 +16,7 @@
     <!-- Cores para estados -->
     <color name="errorColor">#D32F2F</color>  <!-- Vermelho para erros -->
     <color name="successColor">#388E3C</color>  <!-- Verde para sucesso -->
+
+    <color name="spinner_background_color">#FFFFFF</color>
+    <color name="spinner_arrow_color">#000000</color>
 </resources>

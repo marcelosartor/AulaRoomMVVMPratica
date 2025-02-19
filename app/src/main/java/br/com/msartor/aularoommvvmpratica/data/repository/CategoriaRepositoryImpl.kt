@@ -21,4 +21,8 @@ class CategoriaRepositoryImpl @Inject constructor(
                 mensagem = "Erro ao salvar categoria")
         }
     }
+
+    override suspend fun listar(): List<Categoria> {
+        return categoriaDao.listar()
+    }
 }

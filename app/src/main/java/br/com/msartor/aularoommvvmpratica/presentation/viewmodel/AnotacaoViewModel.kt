@@ -40,7 +40,7 @@ class AnotacaoViewModel @Inject constructor(
             _resultadoOperacao.value = ResultadoOperacao(false, "Preencha o campo Descrição")
             return false
         }
-        if (anotacao.categoriaId.toString().isBlank()) {
+        if (anotacao.categoriaId.toInt() <= 0) {
             _resultadoOperacao.value = ResultadoOperacao(false, "Selecione uma Categoria")
             return false
         }
