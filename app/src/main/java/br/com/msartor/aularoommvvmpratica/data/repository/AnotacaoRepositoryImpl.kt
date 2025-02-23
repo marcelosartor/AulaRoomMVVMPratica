@@ -2,6 +2,7 @@ package br.com.msartor.aularoommvvmpratica.data.repository
 
 import br.com.msartor.aularoommvvmpratica.data.dao.AnotacaoDao
 import br.com.msartor.aularoommvvmpratica.data.entity.Anotacao
+import br.com.msartor.aularoommvvmpratica.data.entity.relationship.AnotacaoECategoria
 import javax.inject.Inject
 
 class AnotacaoRepositoryImpl @Inject constructor(
@@ -20,5 +21,9 @@ class AnotacaoRepositoryImpl @Inject constructor(
                 sucesso = false,
                 mensagem = "Erro ao salvar anotação")
         }
+    }
+
+    override suspend fun listarAnotacaoECategoria(): List<AnotacaoECategoria> {
+        return anotacaoDao.listarAnotacaoECategoria()
     }
 }

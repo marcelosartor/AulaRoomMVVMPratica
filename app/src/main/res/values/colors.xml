@@ -5,6 +5,10 @@
     <color name="colorPrimaryVariant">#006666</color>  <!-- Teal mais escuro -->
     <color name="colorSecondary">#20B2AA</color>  <!-- Light Sea Green (variação do teal) -->
 
+    <color name="grey">#BEBEBE</color>
+
+
+
     <!-- Cores para texto -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
