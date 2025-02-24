@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -23,6 +24,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import br.com.msartor.aularoommvvmpratica.R
 import br.com.msartor.aularoommvvmpratica.data.database.BancoDeDados
+import br.com.msartor.aularoommvvmpratica.data.entity.Anotacao
 import br.com.msartor.aularoommvvmpratica.data.entity.Categoria
 import br.com.msartor.aularoommvvmpratica.presentation.ui.adapter.AnotacaoAdapter
 import br.com.msartor.aularoommvvmpratica.presentation.viewmodel.AnotacaoViewModel
@@ -74,12 +76,24 @@ class MainActivity : AppCompatActivity() {
         anotacaoViewModel.anotacoesECategoria.observe(this) {
             anotacaoAdapter.configurarLista(it)
         }
+        anotacaoViewModel.resultadoOperacao.observe(this) {
+            if(it.sucesso) {
+                Toast.makeText(this, it.mensagem, Toast.LENGTH_SHORT).show()
+                anotacaoViewModel.listarAnotacaoECategoria()
+            }else{
+                Toast.makeText(this, it.mensagem, Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
 
     private fun inicializarUI() {
+        val onClickRemover = { anotacao:Anotacao->
+            anotacaoViewModel.remover(anotacao)
+        }
+        val onclikAtualizar = { anotacao:Anotacao-> }
         with(binding){
-            anotacaoAdapter = AnotacaoAdapter()
+            anotacaoAdapter = AnotacaoAdapter(onClickRemover,onclikAtualizar)
             rvAnotacoes.adapter = anotacaoAdapter
             rvAnotacoes.layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
         }
@@ -118,6 +132,8 @@ class MainActivity : AppCompatActivity() {
 
                     override fun onQueryTextChange(newText: String?): Boolean {
                         Log.i("pesquisa_search","onQueryTextChange: ${newText}")
+                        if(newText != null)
+                            anotacaoViewModel.pesquisarAnotacaoECategoria(newText ?: "")
                         return true
                     }
 

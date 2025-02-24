@@ -7,6 +7,8 @@ import br.com.msartor.aularoommvvmpratica.data.entity.relationship.AnotacaoECate
 interface AnotacaoRepository {
     suspend fun salvar(anotacao: Anotacao): ResultadoOperacao
     suspend fun listarAnotacaoECategoria(): List<AnotacaoECategoria>
+    suspend fun pesquisarAnotacaoECategoria(text:String): List<AnotacaoECategoria>
+    suspend fun remover(anotacao: Anotacao): ResultadoOperacao
 
 
 }

@@ -23,4 +23,12 @@
 
     <color name="spinner_background_color">#FFFFFF</color>
     <color name="spinner_arrow_color">#000000</color>
+
+    <!-- cores claras -->
+    <color name="laranja">#fcbf49</color>
+    <color name="roxo">#e0b1cb</color>
+    <color name="azul">#caf0f8</color>
+    <color name="rosa">#ffe5ec</color>
+    <color name="amarelo">#fdfcdc</color>
+    <color name="bege">#eae2b7</color>
 </resources>

@@ -57,6 +57,19 @@ class AnotacaoViewModel @Inject constructor(
             val resultado = anotacaoRepository.listarAnotacaoECategoria()
             _anotacoesECategoria.postValue(resultado)
         }
+    }
 
+    fun pesquisarAnotacaoECategoria(text:String){
+        viewModelScope.launch(Dispatchers.IO) {
+            val resultado = anotacaoRepository.pesquisarAnotacaoECategoria(text)
+            _anotacoesECategoria.postValue(resultado)
+        }
+    }
+
+    fun remover(anotacao: Anotacao) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val resultado = anotacaoRepository.remover(anotacao)
+            _resultadoOperacao.postValue(resultado)
+        }
     }
 }
