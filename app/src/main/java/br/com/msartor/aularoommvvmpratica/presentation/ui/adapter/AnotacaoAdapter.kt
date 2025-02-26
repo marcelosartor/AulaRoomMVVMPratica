@@ -36,6 +36,10 @@ class AnotacaoAdapter(
                 onClickRemover(item.anotacao)
             }
 
+            binding.cardItem.setOnClickListener{
+                onClickAtualizar(item.anotacao)
+            }
+
         }
     }
 

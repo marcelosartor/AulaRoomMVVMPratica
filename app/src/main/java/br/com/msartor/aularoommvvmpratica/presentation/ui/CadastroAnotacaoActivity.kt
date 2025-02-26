@@ -1,6 +1,7 @@
 package br.com.msartor.aularoommvvmpratica.presentation.ui
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.ArrayAdapter
@@ -29,6 +30,8 @@ class CadastroAnotacaoActivity : AppCompatActivity() {
 
     private lateinit var spinnerAadapter: ArrayAdapter<String>
 
+    private var anotacao:Anotacao? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -52,6 +55,19 @@ class CadastroAnotacaoActivity : AppCompatActivity() {
 
     private fun inicializarUI() {
         with(binding) {
+
+            val bundle = intent.extras
+            if (bundle != null) {
+                anotacao = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    bundle.getParcelable("anotacao", Anotacao::class.java)
+                }else{
+                    bundle.getParcelable<Anotacao>("anotacao")
+                }
+                if(anotacao!=null){
+                    binding.editTituloAnotacao.setText(anotacao!!.titulo)
+                    binding.editDescricaoAnotacao.setText(anotacao!!.descricao)
+                }
+            }
             spinnerAadapter = ArrayAdapter(
                 this@CadastroAnotacaoActivity,
                 android.R.layout.simple_spinner_dropdown_item,
@@ -62,7 +78,7 @@ class CadastroAnotacaoActivity : AppCompatActivity() {
     }
 
     private fun inicializarObservables() {
-        categoriaViewModel.categorias.observe(this){
+        categoriaViewModel.categorias.observe(this){ it ->
             val listaCategorias = mutableListOf("Selecione uma categoria")
             val categorias = it.map { categoria ->
                 categoria.nome
@@ -71,6 +87,13 @@ class CadastroAnotacaoActivity : AppCompatActivity() {
             spinnerAadapter.clear()
             spinnerAadapter.addAll(listaCategorias)
             spinnerAadapter.notifyDataSetChanged()
+
+            var posicaoCategoria = 0
+            if(anotacao!=null){
+                posicaoCategoria = it.indexOfFirst { item->item.id==anotacao!!.categoriaId } + 1
+
+            }
+            binding.spinnerCategorias.setSelection(posicaoCategoria)
 
         }
 
@@ -102,8 +125,13 @@ class CadastroAnotacaoActivity : AppCompatActivity() {
 
             val posicaoSelecionada = spinnerCategorias.selectedItemPosition
             var idCategoria = if(posicaoSelecionada>0) categoriaViewModel.categorias.value?.get(posicaoSelecionada-1)?.id?:0L else 0L
-            val anotacao = Anotacao(0, titulo, Descricao, idCategoria)
-            anotacaoViewModel.salvar(anotacao)
+
+            var idAnotacao = 0L
+            if(anotacao!=null){
+                idAnotacao = anotacao!!.id
+            }
+            anotacao = Anotacao(idAnotacao, titulo, Descricao, idCategoria)
+            anotacaoViewModel.salvar(anotacao!!)
         }
     }
 

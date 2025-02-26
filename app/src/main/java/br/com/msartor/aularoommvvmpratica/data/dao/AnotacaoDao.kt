@@ -4,13 +4,17 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 import br.com.msartor.aularoommvvmpratica.data.entity.Anotacao
 import br.com.msartor.aularoommvvmpratica.data.entity.relationship.AnotacaoECategoria
 
 @Dao
 interface AnotacaoDao {
     @Insert
-    fun salvar(anotacao: Anotacao):Long
+    fun insert(anotacao: Anotacao):Long
+
+    @Update
+    fun update(anotacao: Anotacao):Int
 
     @Delete
     fun remover(anotacao: Anotacao):Int

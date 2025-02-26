@@ -91,7 +91,11 @@ class MainActivity : AppCompatActivity() {
         val onClickRemover = { anotacao:Anotacao->
             anotacaoViewModel.remover(anotacao)
         }
-        val onclikAtualizar = { anotacao:Anotacao-> }
+        val onclikAtualizar = { anotacao:Anotacao->
+            val intent = Intent(this, CadastroAnotacaoActivity::class.java)
+            intent.putExtra("anotacao",anotacao)
+            startActivity(intent)
+        }
         with(binding){
             anotacaoAdapter = AnotacaoAdapter(onClickRemover,onclikAtualizar)
             rvAnotacoes.adapter = anotacaoAdapter
