@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.room)
     alias(libs.plugins.hiltPlugin)
+    alias(libs.plugins.kotlin.parcelize)
 }
 
 android {

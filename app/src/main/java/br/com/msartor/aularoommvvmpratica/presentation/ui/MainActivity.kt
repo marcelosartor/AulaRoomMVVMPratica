@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -19,9 +20,14 @@ import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.SearchView.OnQueryTextListener
 import androidx.core.view.MenuHost
 import androidx.lifecycle.Lifecycle
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import br.com.msartor.aularoommvvmpratica.R
 import br.com.msartor.aularoommvvmpratica.data.database.BancoDeDados
+import br.com.msartor.aularoommvvmpratica.data.entity.Anotacao
 import br.com.msartor.aularoommvvmpratica.data.entity.Categoria
+import br.com.msartor.aularoommvvmpratica.presentation.ui.adapter.AnotacaoAdapter
+import br.com.msartor.aularoommvvmpratica.presentation.viewmodel.AnotacaoViewModel
 import br.com.msartor.aularoommvvmpratica.presentation.viewmodel.CategoriaViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -35,6 +41,10 @@ class MainActivity : AppCompatActivity() {
     private val binding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
+    private val anotacaoViewModel: AnotacaoViewModel by viewModels()
+
+    private lateinit var anotacaoAdapter: AnotacaoAdapter;
+
 
     @SuppressLint("SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,8 +60,48 @@ class MainActivity : AppCompatActivity() {
         val toolbar: Toolbar = binding.toolbar //findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-        inicializarBarraNavegacao()
+
+        inicializarUI()
         inicializarEventosDeClique()
+        inicalizarObservables()
+    }
+
+
+    override fun onStart() {
+        super.onStart()
+        anotacaoViewModel.listarAnotacaoECategoria()
+    }
+
+    private fun inicalizarObservables() {
+        anotacaoViewModel.anotacoesECategoria.observe(this) {
+            anotacaoAdapter.configurarLista(it)
+        }
+        anotacaoViewModel.resultadoOperacao.observe(this) {
+            if(it.sucesso) {
+                Toast.makeText(this, it.mensagem, Toast.LENGTH_SHORT).show()
+                anotacaoViewModel.listarAnotacaoECategoria()
+            }else{
+                Toast.makeText(this, it.mensagem, Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+
+    private fun inicializarUI() {
+        val onClickRemover = { anotacao:Anotacao->
+            anotacaoViewModel.remover(anotacao)
+        }
+        val onclikAtualizar = { anotacao:Anotacao->
+            val intent = Intent(this, CadastroAnotacaoActivity::class.java)
+            intent.putExtra("anotacao",anotacao)
+            startActivity(intent)
+        }
+        with(binding){
+            anotacaoAdapter = AnotacaoAdapter(onClickRemover,onclikAtualizar)
+            rvAnotacoes.adapter = anotacaoAdapter
+            rvAnotacoes.layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
+        }
+        inicializarBarraNavegacao()
     }
 
     private fun inicializarEventosDeClique() {
@@ -86,6 +136,8 @@ class MainActivity : AppCompatActivity() {
 
                     override fun onQueryTextChange(newText: String?): Boolean {
                         Log.i("pesquisa_search","onQueryTextChange: ${newText}")
+                        if(newText != null)
+                            anotacaoViewModel.pesquisarAnotacaoECategoria(newText ?: "")
                         return true
                     }
 
