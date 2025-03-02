@@ -72,6 +72,13 @@ dependencies {
 
 
     testImplementation(libs.junit)
+
+    // Teste instrumentados
+    // ROOM for tests
+    androidTestImplementation(libs.room.testing)
+    // truth
+    androidTestImplementation(libs.truth)
+
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 }
